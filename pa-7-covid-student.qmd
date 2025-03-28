@@ -59,7 +59,7 @@ Note - there may be an error in the code below.
 ```{r}
 #| label: read-clean-covid-cases
 
-cases <- read_csv("covid_cases_us.csv")
+cases <- read_csv("data/covid_cases_us.csv")
 ```
 
 
@@ -72,9 +72,9 @@ Correct the errors and then assign the resulting data to `state_totals`.
 ```{r}
 #| label: calculate-totals
 
-cases |> 
-  groupby(state) |> 
-  sum(total = sum(case_daily)) |> 
+state_totals <- cases |> 
+  group_by(state) |> 
+  summarize(total = sum(cases_daily)) |> 
   ungroup() # this is useful to do after a group_by calculation is complete so you do not continue grouping by those variables 
 ```
 
@@ -84,11 +84,19 @@ Now use the `states_totals` and identify the top ten states/territories with the
 ```{r}
 #| label: top-10-states-cases
 
-state_totals |> 
-  ## order the data by total cases
-  ## extract just the top ten (Hint - look at the `slice() functions)
-  ## create a bar chart with x as the totals and y as the state names
-  ## order the states by greatest to smallest total on the graph
+state_totals %>% 
+  arrange(desc(total)) %>% 
+  slice_head(n = 10) %>% 
+  ggplot(aes(x = total,
+             y = fct_reorder(state,
+                             total)))+
+  geom_col(aes(fill = state))+
+  theme_light()+
+  theme(legend.position="none")+
+  labs(x = "Total Cases",
+       y = "State")
+  
+
   ## label, color, update as necessary to provide all relevant information
 ```
 
@@ -96,13 +104,13 @@ state_totals |>
 
 **Which state had the most COVID-19 cases between January 2020 and March 2023?**
 
->Insert Answer Here
+> California had the most COVID-19 cases between January 2020 and March 2023.
 
 
 ### Other Question
 **Is this the best way to look at our data? Is looking at just the total number of cases the best way to compare states?**
 
->Insert Answer Here
+> We should instead look at the proportion of each state's population which has COVID-19, as a way to normalize for states with vastly different populations.
 
 
 
