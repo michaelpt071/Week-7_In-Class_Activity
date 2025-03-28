@@ -1,6 +1,6 @@
 ---
 title: "PA 7: COVID-19 Infections and Impact on States"
-author: "Group Member Names"
+author: "Michael Torrisi, Bianca Rodas"
 format: 
   html: default
   gfm: default
