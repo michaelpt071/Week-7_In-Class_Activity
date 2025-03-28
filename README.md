@@ -3,3 +3,5 @@ Week 7 In-Class Activity: COVID-19 in the US
 1. added files from canvas
 
 2. completed canvas q1
+
+3. completed canvas q2
