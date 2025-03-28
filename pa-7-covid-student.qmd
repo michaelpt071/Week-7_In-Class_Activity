@@ -140,7 +140,8 @@ Choose one of the above statistics to calculate to make our comparison between s
 state_totals |>
   left_join( us_pop, by=c("state" = "NAME")) |> 
   drop_na(estimate) |> 
-  mutate(prop = (total/estimate)) |> 
+  mutate(prop = (total/estimate)) |>
+  arrange(desc(prop)) |>
   slice_head(n=10) |>
   ggplot(aes(x = prop,
              y = fct_reorder(state,
@@ -157,6 +158,13 @@ state_totals |>
   ## label, color, update as necessary to provide all relevant information
 ```
 
+```{r}
+state_totals |>
+  left_join( us_pop, by=c("state" = "NAME")) |> 
+  drop_na(estimate) |> 
+  mutate(prop = (total/estimate)) %>% 
+  arrange(state)
+```
 
 
 
@@ -164,7 +172,7 @@ state_totals |>
 
 **Which state had highest number of COVID-19 cases relative to population size between January 2020 and March 2023?**
 
->Alaska had the highest number of Covid cases relative to population sizes between January 2020 and arch 2023.  
+>Rhode Island had the highest number of Covid cases relative to population sizes between January 2020 and arch 2023.  
 
 
 ### Other Questions
