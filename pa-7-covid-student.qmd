@@ -129,7 +129,7 @@ Note - there may be an error in the code below.
 
 ```{r}
 #| label: us-state-population-data
-us_pop <- read_csv("USpop2019.csv")
+us_pop <- read_csv("data/USpop2019.csv")
 ```
 
 ### Which 10 US States/Territories had the most COVID-19 Cases Relative to Population Size from January 2020-March 2023
@@ -137,9 +137,19 @@ us_pop <- read_csv("USpop2019.csv")
 Choose one of the above statistics to calculate to make our comparison between states/territories.  Then recreate your graph from above 
 
 ```{r}
-state_totals |> 
-  ## add in column with state population sizes  
-  ## calculate your chosen relative rate (e.g. proportion, percentage, rate)
+state_totals |>
+  left_join( us_pop, by=c("state" = "NAME")) |> 
+  drop_na(estimate) |> 
+  mutate(prop = (total/estimate)) |> 
+  slice_head(n=10) |>
+  ggplot(aes(x = prop,
+             y = fct_reorder(state,
+                             prop)))+
+  geom_col(aes(fill = state))+
+  theme_light()+
+  theme(legend.position="none")+
+  labs(x = "Proportions",
+       y = "State")
   ## order the data by your relative rate
   ## extract just the top ten (Hint - look at the `slice() functions)
   ## create a bar chart with x as the relative rate and y as the state names
@@ -154,7 +164,7 @@ state_totals |>
 
 **Which state had highest number of COVID-19 cases relative to population size between January 2020 and March 2023?**
 
->Insert Answer Here
+>Alaska had the highest number of Covid cases relative to population sizes between January 2020 and arch 2023.  
 
 
 ### Other Questions
@@ -164,12 +174,12 @@ state_totals |>
 - Time scale and impact of time    
 - 
 
->Insert Answer Here
+> It doesn't account for people who got covid multiple times.
 
 
 **What other questions would you like to try to answer using this data? Would that require other data sources? What information would you need to answer your questions?**
 
->Insert Answer Here  
+>It would be best if we can look how the proportions have changed over time in each state.  
 
 
 
