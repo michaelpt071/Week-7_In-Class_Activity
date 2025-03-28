@@ -95,9 +95,6 @@ state_totals %>%
   theme(legend.position="none")+
   labs(x = "Total Cases",
        y = "State")
-  
-
-  ## label, color, update as necessary to provide all relevant information
 ```
 
 ### Canvas Quiz Question 1
@@ -151,11 +148,6 @@ state_totals |>
   theme(legend.position="none")+
   labs(x = "Proportions",
        y = "State")
-  ## order the data by your relative rate
-  ## extract just the top ten (Hint - look at the `slice() functions)
-  ## create a bar chart with x as the relative rate and y as the state names
-  ## order the states by greatest to smallest relative rate on the graph
-  ## label, color, update as necessary to provide all relevant information
 ```
 
 ```{r}
